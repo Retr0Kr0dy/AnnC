@@ -59,14 +59,7 @@ client.connect ((host, port))
 def main():
     while True:
         try:
-            message = client.recv(8192)
-            # if message == 'NICK':                
-            #     nickname = input ("Choose a nickname :")
-            #     client.send(nickname.encode('ascii'))
-            # else:
-            #     message = message.encode('ascii')
-            #     decrypt_message(message)
-            #     print(original_message)
+            message = client.recv(8192)            
             decrypt_message (message)
             print (original_message)
         except:
@@ -76,16 +69,11 @@ def main():
 
 def send_message():
     while True:
-        # message = f'{nickname}: {input("")}' # for non encrypted msg
-
         encrypt_message()
         message = encrypted_message
         client.send(message)
 
 def encrypt_message():
-    # message = f'{nickname}: {input("")}
-    # message = input("")
-    # message = message.encode('ascii')s
     global message
     message = input("")
     message = (nickname + message).encode('utf-8')
@@ -115,7 +103,6 @@ def decrypt_message(message):
             )
         )
     
-    # print ("")
     decryption()
 
 main_thread = threading.Thread(target=main)
