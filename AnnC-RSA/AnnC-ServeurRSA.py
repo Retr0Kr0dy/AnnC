@@ -35,21 +35,22 @@ clients_list = []
 # names_list = []
 
 def broadcast(message):
+    print (message)
     for client in clients_list:
         client.send(message)
-        print (message)
 
 def handle(client):
     while True:
         try:
-            message = client.recv(8192)
+            message = client.recv(8192) # decode from 'ascii' for NICK
 
             # client.send(message) # For one client
-            print ("Encrypted message :")
-            print (message)
-            for client in clients_list:
-                client.send(message)
-            print ("broadcoasted !!!")
+            print ("\nEncrypted message :")
+            broadcast(message)
+            # print (message)
+            # for client in clients_list:
+            #     client.send(message)
+            print ("\nbroadcoasted !!!")
         except:
             index = clients_list.index(client)
             clients_list.remove(client)
