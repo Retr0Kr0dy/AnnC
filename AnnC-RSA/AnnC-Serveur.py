@@ -32,7 +32,6 @@ server.bind((host, port))
 server.listen()
 
 clients_list = []
-# names_list = []
 
 def broadcast(message):
     print (message)
@@ -42,39 +41,22 @@ def broadcast(message):
 def handle(client):
     while True:
         try:
-            message = client.recv(8192) # decode from 'ascii' for NICK
-
-            # client.send(message) # For one client
+            message = client.recv(8192)
             print ("\nEncrypted message :")
             broadcast(message)
-            # print (message)
-            # for client in clients_list:
-            #     client.send(message)
             print ("\nbroadcoasted !!!")
         except:
             index = clients_list.index(client)
             clients_list.remove(client)
             client.close
-            # nickname = names_list[index]
-            # names_list.remove(nickname)
-            # broadcast(f'{nickname} left the chat!'.encode('ascii'))
             break
 
 def main():
     while True:
         client, address = server.accept()
         print (f"\nNew user connected at {address}")
-
-        # client.send('NICK'.encode('ascii'))
-        # nickname = client.recv(1024).decode('ascii')
-        # names_list.append(nickname)
         clients_list.append(client)
         print (clients_list)
-        # print (f'\n{address} as set his nickname to {nickname}')
-
-        # broadcast(f'{nickname} joined the chat !'.encode('ascii'))
-        # client.send('Connected to the server !'.encode('ascii'))
-
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
 
