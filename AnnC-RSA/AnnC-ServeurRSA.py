@@ -45,9 +45,15 @@ def handle(client):
             message = client.recv(8192)
             print ("msg")
             print (message)
-            # client.send(message)
+            print ("yes it work now got to encode")
+            client.send(message)
+            print (clients_list)
+            print (client)	
+            message = message.encode('utf-8')
+            print ("encoded")
+            print (message)
             for client in clients_list:
-            	client.send(message)
+                client.send(message)
             # broadcast(str_msg)
             print ("broadcoast")
         except:
@@ -68,7 +74,7 @@ def main():
         # nickname = client.recv(1024).decode('ascii')
         # names_list.append(nickname)
         clients_list.append(client)
-        
+        print (clients_list)
         # print (f'\n{address} as set his nickname to {nickname}')
 
         # broadcast(f'{nickname} joined the chat !'.encode('ascii'))
