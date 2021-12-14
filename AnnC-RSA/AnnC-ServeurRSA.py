@@ -43,19 +43,13 @@ def handle(client):
     while True:
         try:
             message = client.recv(8192)
-            print ("msg")
-            print (message)
-            print ("yes it work now got to encode")
-            client.send(message)
-            print (clients_list)
-            print (client)	
-            message = message.encode('utf-8')
-            print ("encoded")
+
+            # client.send(message) # For one client
+            print ("Encrypted message :")
             print (message)
             for client in clients_list:
                 client.send(message)
-            # broadcast(str_msg)
-            print ("broadcoast")
+            print ("broadcoasted !!!")
         except:
             index = clients_list.index(client)
             clients_list.remove(client)
