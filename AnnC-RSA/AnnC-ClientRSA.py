@@ -60,6 +60,8 @@ def main():
         try:
             message = client.recv(8192)
             print("incoming message !!!")
+            print (message)
+            print ("decrypting")
             #if message == 'NICK':
             #    client.send(nickname.encode('ascii'))
             #else:
@@ -101,8 +103,9 @@ def encrypt_message():
     encrypted_message = encrypted
 
 
-def decrypt_message():
-    message = client.recv(8192).encode('utf-8')
+def decrypt_message(message):
+    print ("Recieved message :")
+    print (message)
 
     def decryption():
         global original_message
@@ -116,6 +119,8 @@ def decrypt_message():
 
     decryption()
     decrypted_message = original_message
+    print ("decrypted message : ")
+    print (decrypted_message)
 
 
 
