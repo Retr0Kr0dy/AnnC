@@ -49,8 +49,9 @@ with open(public_key_file, "rb") as key_file:
         key_file.read(),
         backend=default_backend()
     )
+print ("---Target locked---")
 
-nickname = (input ("Choose a nickname :") + " :")
+nickname = (input ("\nChoose a nickname :") + " : ")
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect ((host, port))
@@ -66,8 +67,8 @@ def main():
             #     message = message.encode('ascii')
             #     decrypt_message(message)
             #     print(original_message)
-            decrypt_message(message)
-            print(original_message)
+            decrypt_message (message)
+            print (original_message)
         except:
             print("An error Occurred !")
             client.close()
@@ -86,7 +87,7 @@ def encrypt_message():
     # message = input("")
     # message = message.encode('ascii')s
     global message
-    message = input("chat :")
+    message = input("")
     message = (nickname + message).encode('utf-8')
 
     def encryption():
@@ -102,7 +103,7 @@ def encrypt_message():
     encrypted_message = encrypted
 
 def decrypt_message(message):
-    print ("Recieved message :")
+    print ("\nRecieved message :")
 
     def decryption():
         global original_message
@@ -113,9 +114,9 @@ def decrypt_message(message):
                 label=None
             )
         )
-
+    
+    # print ("")
     decryption()
-    decrypted_message = original_message
 
 main_thread = threading.Thread(target=main)
 main_thread.start()
