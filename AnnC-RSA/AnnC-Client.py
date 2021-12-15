@@ -89,7 +89,7 @@ def encrypt_message():
     encrypted_message = encrypted
 
 def decrypt_message(message):
-    print ("\nRecieved message :")
+    print ("\n")
 
     def decryption():
         global original_message
