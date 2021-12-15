@@ -30,7 +30,6 @@ host = input ("Enter the IP of the host server :")
 port = int(input ("Enter the listening port of the host server :"))
 
 private_key_file = input ("Import a private key file to use :")
-private_key_file = ("private.pem")
 try:
     with open (private_key_file, 'rb') as f_keyfile:
         private_key = serialization.load_pem_private_key(
@@ -43,7 +42,6 @@ except:
     print ("Error : Key file not found")
 
 public_key_file = input ("Import a public key file to use :")
-public_key_file = ("public.pem")
 with open(public_key_file, "rb") as key_file:
     public_key = serialization.load_pem_public_key(
         key_file.read(),
