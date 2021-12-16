@@ -25,43 +25,57 @@ print ("************************************************")
 print ("        Annonymous TCP Chat x RSA 3072 (Client)")
 print (" ----------------------------------------------\n")
 
-
 host = input ("Enter the IP of the host server :")
 port = int(input ("Enter the listening port of the host server :"))
 
-private_key_file = input ("Import a private key file to use :")
-try:
-    with open (private_key_file, 'rb') as f_keyfile:
-        private_key = serialization.load_pem_private_key(
-            f_keyfile.read(),
-            password=None,
-            backend=default_backend()
-        )
-    print ("---Target locked---")
-except:
-    print ("Error : Key file not found")
+def get_private_key():
+    global private_key
+    private_key_file = input ("Import a private key file to use :")    
+    try:
+        with open (private_key_file, 'rb') as f_keyfile:
+            private_key = serialization.load_pem_private_key(
+                f_keyfile.read(),
+                password=None,
+                backend=default_backend()
+            )
+            print ("---Target locked---")
+    except:
+        print ("Error : Key file not found")
+        get_private_key()
 
-public_key_file = input ("Import a public key file to use :")
-with open(public_key_file, "rb") as key_file:
-    public_key = serialization.load_pem_public_key(
-        key_file.read(),
-        backend=default_backend()
-    )
-print ("---Target locked---")
+get_private_key()
 
-nickname = (input ("\nChoose a nickname :") + " : ")
+def get_public_key():
+    global public_key
+    public_key_file = input ("Import a public key file to use :")
+    try:
+        with open(public_key_file, "rb") as key_file:
+            public_key = serialization.load_pem_public_key(
+                key_file.read(),
+                backend=default_backend()
+            )
+        print ("---Target locked---")
+    except:
+        print("Error : Key file not found")
+        get_public_key()
+
+get_public_key()
+
+nickname = (input ("Choose a nickname :") + " : ")
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect ((host, port))
 
+print ("\nConnected to server, enter your message below or type QUIT to close the connection\n")
+
 def main():
     while True:
         try:
-            message = client.recv(8192)            
+            message = client.recv(3072)            
             decrypt_message (message)
             print (original_message)
         except:
-            print("An error Occurred !")
+            print("\nDisconected from the server !")
             client.close()
             break
 
@@ -72,9 +86,20 @@ def send_message():
         client.send(message)
 
 def encrypt_message():
-    global message
-    message = input("")
-    message = (nickname + message).encode('utf-8')
+
+    def take_input():
+        global message
+        message = input("")
+        if message == "QUIT":
+            client.close()
+            exit(-1)
+        message = (nickname + message).encode('utf-8')
+        if len(message) < 318:
+            print("Sending !!!")
+        elif len(message) > 318:
+            print("Error : Your message can't be encrypted cause it's bigger than 318 bytes")
+            take_input()
+    take_input()
 
     def encryption():
         global encrypted
@@ -89,7 +114,6 @@ def encrypt_message():
     encrypted_message = encrypted
 
 def decrypt_message(message):
-    print ("\n")
 
     def decryption():
         global original_message
