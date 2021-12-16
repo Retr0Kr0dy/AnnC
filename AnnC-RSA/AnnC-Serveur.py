@@ -41,10 +41,10 @@ def broadcast(message):
 def handle(client):
     while True:
         try:
-            message = client.recv(8192)
-            print ("\nEncrypted message :")
+            message = client.recv(3072)
+            print ("\nEncrypted message :\n")
             broadcast(message)
-            print ("\nbroadcoasted !!!")
+            print ("\nbroadcoasted !!!\n----------------")
         except:
             index = clients_list.index(client)
             clients_list.remove(client)
