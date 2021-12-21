@@ -7,7 +7,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import serialization
 
 
-key_type = input ("\nSelect a Key size.\n\n\n1 - 1024 bits\n2 - 2048 bits (Recommended)\n3 - 3072 bits\n\n\nPlease enter a number : ")
+key_type = input ("\nSelect a Key size.\n\n\n1 - 1024 bits\n2 - 2048 bits (Recommended)\n3 - 3072 bits\n4 - 4096\n\n\nPlease enter a number : ")
 
 if key_type == "1":
     private_key = rsa.generate_private_key(
@@ -42,6 +42,18 @@ if key_type == "3":
     priv_key_file = (key_input + "_private_key.pem")
     publ_key_file = (key_input + "_public_key.pem")
 
+if key_type == "4":
+    private_key = rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=4096,
+        backend=default_backend()
+    )
+    public_key = private_key.public_key()
+    key_input = input("\n\nEnter the name of the key file to create : ")
+    priv_key_file = (key_input + "_private_key.pem")
+    publ_key_file = (key_input + "_public_key.pem")
+
+    
 try:
     with open (priv_key_file, 'wb') as f_privkeyfile:
         pem = private_key.private_bytes(
