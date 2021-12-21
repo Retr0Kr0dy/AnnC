@@ -31,6 +31,8 @@ RSA Cipher works by encrypting data with the same size as the key;
 2048 bits lenght key = 190 bytes maw encrypted data
 
 3072 bits lenght key = 318 bytes max encrypted data
+
+4096 bits lenght key = 446 bytes max encrypted data
 ```
 
 
